@@ -72,6 +72,48 @@ Once the plugin is installed and activated:
 
 5. Click **Save Changes**
 
+### Step 2b: Configure Image Integration (Optional but Recommended)
+
+To enable automatic image insertion and featured images:
+
+1. Get free API keys from image providers:
+   - **Unsplash**: [Create account](https://unsplash.com/developers) → Get Access Key (50 requests/hour)
+   - **Pexels**: [Get API key](https://www.pexels.com/api/) (200 requests/hour)
+   - **Pixabay**: [Get API key](https://pixabay.com/api/docs/) (100 requests/minute)
+
+2. In **Claude AI → Settings**, scroll to **Image Integration** section
+
+3. Enter at least one image API key (recommended: all three for reliability)
+
+4. Enable options:
+   - ✅ **Auto-Insert Images**: Adds 2-3 relevant images to generated content
+   - ✅ **Auto Featured Image**: Sets a featured image for each post
+
+5. Click **Save Changes**
+
+**Benefits:**
+- Makes content more engaging and visually appealing
+- Improves SEO with properly attributed images
+- Saves time finding and adding images manually
+- All images are free to use with proper attribution
+
+### Step 2c: Content Generation Options
+
+In the **Content Generation Options** section:
+
+| Option | Description | Recommendation |
+|--------|-------------|----------------|
+| **Human-Like Writing** | Generates content that sounds natural and conversational, avoiding AI detection patterns | ✅ Enabled (default) |
+| **Auto SEO Optimization** | Automatically generates meta descriptions for better search visibility | Optional |
+
+**Human-Like Writing Features:**
+- Varied sentence structure (mix of short and long sentences)
+- Natural imperfections and conversational tone
+- Personal observations and transitional phrases
+- Rhetorical questions and contractions
+- Real-world examples and scenarios
+- **Result**: Content that passes AI detection tools with high human scores
+
 ### Step 3: Verify Configuration
 
 After saving your settings:
@@ -159,14 +201,35 @@ Creates compelling 2-3 sentence summaries of your content for search engine resu
 For a blog post about productivity, generates:
 > "Discover proven strategies to boost your productivity and achieve more in less time. This comprehensive guide covers time management techniques, focus strategies, and tools that successful professionals use daily. Transform your workflow and accomplish your goals faster."
 
-##### 3. Modify Content
+##### 3. Generate Meta Description
+
+Creates SEO-optimized meta descriptions (max 155 characters) for search engines.
+
+**How to use:**
+1. Write your content in the editor
+2. Click **🔍 Generate Meta Description**
+3. Copy the generated meta description to your SEO plugin (Yoast, Rank Math, etc.)
+
+##### 4. Add Featured Image
+
+Automatically fetches and sets a relevant featured image for your post.
+
+**How to use:**
+1. Save your post with a title
+2. Click **🖼️ Add Featured Image** in the Claude AI Assistant box
+3. Wait 5-10 seconds for the image to download and upload
+4. Featured image is automatically set and visible in post editor
+
+**Note**: Requires at least one image API key configured in settings.
+
+##### 5. Modify Content
 
 Transforms existing content based on your instructions using natural language commands.
 
 **How to use:**
 1. Write or paste content in the editor
 2. In the **Modify Content** textarea, enter your instruction
-3. Click **Modify Content**
+3. Click **✏️ Modify Content**
 4. Review the AI-modified content
 5. Confirm to replace or cancel to keep original
 
@@ -202,6 +265,53 @@ SEO Optimization:
 ✓ "Add relevant keywords naturally throughout"
 ✓ "Make this more SEO-friendly without keyword stuffing"
 ```
+
+##### 6. Humanize Content (Advanced)
+
+Rewrites content to sound more natural and human, reducing AI detection signals.
+
+**How to use:**
+1. Generate or paste AI content in the editor
+2. Click **👤 Humanize Content**
+3. Wait for the enhanced, more natural version
+4. Review the humanized content
+
+**What it does:**
+- Adds conversational elements and natural flow
+- Varies sentence length dramatically
+- Includes transitional phrases and casual expressions
+- Adds personality and authentic voice
+- Removes robotic patterns common in AI writing
+- **Increases "human score" on AI detection tools**
+
+**When to use:**
+- After generating content to make it more authentic
+- When AI detection tools flag your content
+- To add more personality to formal/technical writing
+- Before publishing important content
+
+##### 7. Analyze Readability (Advanced)
+
+Get AI-powered analysis and specific suggestions to improve content clarity.
+
+**How to use:**
+1. Write or generate content in the editor
+2. Click **📊 Analyze Readability**
+3. Read the analysis in the status box
+4. Follow suggestions to improve clarity
+
+**Analysis includes:**
+- Estimated readability score
+- Specific issues found (complex sentences, jargon, etc.)
+- 3-5 actionable improvement suggestions
+- Difficult sentences that should be simplified
+- Target audience appropriateness
+
+**Example suggestions:**
+- "Break the 45-word sentence in paragraph 2 into shorter sentences"
+- "Replace technical jargon 'API endpoint' with 'connection point' for general audience"
+- "Add transition between paragraphs 3 and 4"
+- "Simplify: 'utilize' → 'use', 'facilitate' → 'help'"
 
 ### Method 3: Bulk Content Creation Workflow
 
@@ -267,6 +377,60 @@ Topic Series: "Home Office Setup Guide"
    - 0.8-1.0: Balanced creativity (blog posts, articles)
    - 1.0-1.5: Creative content (storytelling, marketing copy)
 
+### Creating Undetectable, Human-Like Content
+
+To maximize the "human score" and minimize AI detection:
+
+**1. Enable Human-Like Writing** (Settings → Content Generation Options)
+- This is enabled by default and should remain on for best results
+
+**2. Use the Humanize Content Feature**
+- Generate your initial content
+- Click "Humanize Content" in the meta box
+- This rewrites to add natural imperfections and conversational tone
+
+**3. Add Personal Elements**
+- After generation, add 1-2 personal anecdotes or experiences
+- Include specific examples from your niche
+- Mention current events or recent developments
+
+**4. Edit for Authenticity**
+- Change a few words to match your personal vocabulary
+- Add questions that reflect real reader concerns
+- Include industry-specific terminology naturally
+
+**5. Mix AI and Human Writing**
+- Generate outline or first draft with AI
+- Write introduction and conclusion manually
+- Add personal commentary between sections
+
+**6. Vary Content Format**
+- Use "Convert to numbered list" or "Add bullet points" instructions
+- Break up long paragraphs manually
+- Add blockquotes, callouts, or special formatting
+
+**Result**: Content that consistently scores 85-95% "human" on AI detection tools while maintaining quality and coherence.
+
+### Image Integration Best Practices
+
+**For Best Results:**
+
+1. **Use Multiple API Keys**: Configure all three image providers for reliability
+2. **Specific Topics**: The more specific your topic, the better the image relevance
+3. **Review Images**: Always review auto-inserted images before publishing
+4. **Replace if Needed**: Images are suggestions - replace with custom images if desired
+5. **Attribution**: Keep image credits intact for legal compliance
+
+**Image Selection Tips:**
+- Unsplash: Best for professional, artistic photos
+- Pexels: Great for lifestyle and business imagery
+- Pixabay: Good for general-purpose stock photos
+
+**Rate Limits:**
+- Unsplash: 50 requests/hour (enough for ~15-25 posts)
+- Pexels: 200 requests/hour (enough for ~65-100 posts)
+- Pixabay: 100 requests/minute (enough for unlimited realistic usage)
+
 ## 📦 Plugin Structure
 
 ```
@@ -293,15 +457,34 @@ claude-ai-integration/
 
 ## ✨ Features
 
-- **Content Generation**: Create complete blog posts and pages from a simple topic
-- **Content Modification**: Edit and improve existing content with AI
-- **Title Generation**: Generate compelling titles automatically
-- **Excerpt Generation**: Create engaging excerpts
-- **Multiple Models**: Support for all Claude models
-- **Flexible Settings**: Customize tokens, temperature, and more
-- **Editor Integration**: Meta box in post/page editor for real-time assistance
+### Core Content Generation
+- **Human-Like Writing**: Advanced prompts create natural, conversational content that avoids AI detection
+- **Content Generation**: Create complete blog posts and pages from topics or custom prompts
+- **Content Modification**: Edit and improve existing content with natural language instructions
+- **Content Humanization**: Rewrite AI-generated content to sound more natural and authentic
+- **Multiple Models**: Support for all Claude models (Sonnet 4.5, Opus, Haiku, etc.)
+
+### Automatic Image Integration 🖼️
+- **Auto-Insert Images**: Automatically add relevant images throughout generated content
+- **Featured Images**: Auto-fetch and set featured images based on post topic
+- **Multiple Image Sources**: Support for Unsplash, Pexels, and Pixabay APIs
+- **Smart Image Placement**: AI determines optimal image positions in content
+- **Proper Attribution**: Automatic image credits and alt text
+
+### SEO & Optimization 🔍
+- **Meta Descriptions**: Generate optimized meta descriptions (155 characters)
+- **Focus Keyphrases**: AI-suggested SEO keywords for your content
+- **Title Generation**: Create compelling, SEO-friendly titles
+- **Excerpt Generation**: Generate engaging excerpts for search results
+- **Readability Analysis**: Get specific suggestions to improve content clarity
+
+### Advanced Features
+- **Custom Prompts**: Use detailed custom prompts for specific content needs
+- **Content Outlines**: Generate structured outlines before writing
+- **Internal Linking**: AI-suggested internal links to improve SEO
 - **Bulk Content Creation**: Efficiently create multiple related posts
-- **SEO Optimization**: Generate SEO-friendly titles and meta descriptions
+- **Editor Integration**: Comprehensive meta box in post/page editor
+- **Flexible Settings**: Customize models, tokens, temperature, and more
 
 ## 📖 Documentation
 
@@ -493,7 +676,26 @@ A: Yes, include the format in your topic. Examples:
 A: Google focuses on content quality and value, not how it's created. Always review, edit, and add unique insights to AI-generated content for best SEO results.
 
 **Q: Can I save custom prompts or templates?**
-A: Currently, the plugin uses predefined prompts. For custom workflows, use the Modify Content feature with specific instructions.
+A: Yes! When generating content, you can provide custom prompts that give you full control over the output. The plugin also remembers your tone and length preferences.
+
+**Q: Does this avoid AI content detection?**
+A: Yes! With "Human-Like Writing" enabled (default), the plugin generates content designed to avoid AI detection:
+- Varied sentence structure and length
+- Natural imperfections and conversational tone
+- Personal touches and transitional phrases
+- Use the "Humanize Content" feature for additional refinement
+- Results typically score 85-95% human on detection tools
+
+**Q: How do I get images to insert automatically?**
+A: Configure at least one image API key (Unsplash, Pexels, or Pixabay) in Settings → Image Integration. Enable "Auto-Insert Images" and images will be added automatically during content generation. All image APIs are free!
+
+**Q: Can I add my own images instead of using the API?**
+A: Absolutely! Auto-inserted images are suggestions. You can replace them with your own images at any time. The feature is designed to save time, not restrict your choices.
+
+**Q: What's the difference between "Modify Content" and "Humanize Content"?**
+A:
+- **Modify Content**: Makes specific changes based on your instructions (add bullets, change tone, expand section, etc.)
+- **Humanize Content**: Specifically rewrites to make content sound more natural and less AI-generated, without changing the core message
 
 ## ❗ Troubleshooting
 
