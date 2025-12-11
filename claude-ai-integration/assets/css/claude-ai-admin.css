@@ -1,0 +1,219 @@
+/**
+ * Claude AI Integration - Admin Styles
+ */
+
+/* Settings Page */
+.claude-ai-settings-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.claude-ai-settings-main {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.claude-ai-settings-sidebar {
+    width: 300px;
+}
+
+.claude-ai-info-box {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    margin-bottom: 20px;
+}
+
+.claude-ai-info-box h3 {
+    margin-top: 0;
+    color: #23282d;
+    font-size: 16px;
+}
+
+.claude-ai-info-box ul,
+.claude-ai-info-box ol {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.claude-ai-info-box li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* Content Generator Page */
+.claude-ai-generator-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.claude-ai-generator-form {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.claude-ai-generator-preview {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.claude-content-preview {
+    min-height: 400px;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+.claude-content-preview h1,
+.claude-content-preview h2,
+.claude-content-preview h3 {
+    color: #23282d;
+}
+
+.claude-content-preview p {
+    line-height: 1.8;
+}
+
+/* Meta Box */
+.claude-ai-meta-box {
+    padding: 10px 0;
+}
+
+.claude-ai-meta-box p {
+    margin: 10px 0;
+}
+
+.claude-ai-meta-box textarea {
+    font-size: 13px;
+}
+
+.claude-ai-status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.claude-ai-status.loading {
+    display: block;
+    background: #e5f5fa;
+    border-left: 4px solid #00a0d2;
+    color: #00a0d2;
+}
+
+.claude-ai-status.success {
+    display: block;
+    background: #ecf7ed;
+    border-left: 4px solid #46b450;
+    color: #46b450;
+}
+
+.claude-ai-status.error {
+    display: block;
+    background: #fbeaea;
+    border-left: 4px solid #dc3232;
+    color: #dc3232;
+}
+
+/* Status Messages */
+.claude-status-message {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.claude-status-message.loading {
+    background: #e5f5fa;
+    border-left: 4px solid #00a0d2;
+    color: #00a0d2;
+}
+
+.claude-status-message.success {
+    background: #ecf7ed;
+    border-left: 4px solid #46b450;
+    color: #46b450;
+}
+
+.claude-status-message.error {
+    background: #fbeaea;
+    border-left: 4px solid #dc3232;
+    color: #dc3232;
+}
+
+/* Loading Animation */
+.claude-loading {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #00a0d2;
+    border-radius: 50%;
+    animation: claude-spin 1s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes claude-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Button States */
+.button.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.button.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-left-color: #fff;
+    border-radius: 50%;
+    animation: claude-spin 1s linear infinite;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+    .claude-ai-settings-container,
+    .claude-ai-generator-container {
+        flex-direction: column;
+    }
+
+    .claude-ai-settings-sidebar {
+        width: 100%;
+    }
+}
+
+/* WordPress Editor Integration */
+#claude_ai_generator .inside {
+    margin: 0;
+    padding: 12px;
+}
+
+#claude_ai_generator hr {
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px solid #dcdcde;
+}
