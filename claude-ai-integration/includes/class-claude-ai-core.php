@@ -53,6 +53,10 @@ class Claude_AI_Core {
         add_action('wp_ajax_claude_generate_meta_description', array($content_generator, 'ajax_generate_meta_description'));
         add_action('wp_ajax_claude_analyze_readability', array($content_generator, 'ajax_analyze_readability'));
         add_action('wp_ajax_claude_add_featured_image', array($content_generator, 'ajax_add_featured_image'));
+        add_action('wp_ajax_claude_generate_page_with_form', array($content_generator, 'ajax_generate_page_with_form'));
+        add_action('wp_ajax_claude_generate_form', array($content_generator, 'ajax_generate_form'));
+        add_action('wp_ajax_claude_generate_page_section', array($content_generator, 'ajax_generate_page_section'));
+        add_action('wp_ajax_claude_analyze_design', array($content_generator, 'ajax_analyze_design'));
     }
 
     /**

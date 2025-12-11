@@ -359,4 +359,95 @@ class Claude_AI_Content_Generator {
 
         wp_send_json_success(array('message' => __('Featured image added successfully!', 'claude-ai-integration')));
     }
+
+    /**
+     * AJAX handler for generating page with form
+     */
+    public function ajax_generate_page_with_form() {
+        check_ajax_referer('claude_ai_nonce', 'nonce');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'claude-ai-integration')));
+        }
+
+        $form_type = sanitize_text_field($_POST['form_type'] ?? 'contact');
+        $page_purpose = sanitize_text_field($_POST['page_purpose'] ?? 'Contact Us');
+        $elements = isset($_POST['elements']) ? array_map('sanitize_text_field', $_POST['elements']) : array();
+
+        $page_config = array(
+            'form_type' => $form_type,
+            'purpose' => $page_purpose,
+            'elements' => $elements
+        );
+
+        $result = $this->api->generate_page_with_form($page_config);
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => $result->get_error_message()));
+        }
+
+        wp_send_json_success(array('html' => $result));
+    }
+
+    /**
+     * AJAX handler for generating standalone form
+     */
+    public function ajax_generate_form() {
+        check_ajax_referer('claude_ai_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'claude-ai-integration')));
+        }
+
+        $form_type = sanitize_text_field($_POST['form_type'] ?? 'contact');
+        $options = array();
+
+        $result = $this->api->generate_form($form_type, $options);
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => $result->get_error_message()));
+        }
+
+        wp_send_json_success(array('html' => $result));
+    }
+
+    /**
+     * AJAX handler for generating page sections
+     */
+    public function ajax_generate_page_section() {
+        check_ajax_referer('claude_ai_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'claude-ai-integration')));
+        }
+
+        $section_type = sanitize_text_field($_POST['section_type'] ?? 'hero');
+        $options = array(
+            'content' => isset($_POST['content']) ? wp_kses_post($_POST['content']) : '',
+            'heading' => sanitize_text_field($_POST['heading'] ?? '')
+        );
+
+        $result = $this->api->generate_page_section($section_type, $options);
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => $result->get_error_message()));
+        }
+
+        wp_send_json_success(array('html' => $result));
+    }
+
+    /**
+     * AJAX handler for analyzing website design
+     */
+    public function ajax_analyze_design() {
+        check_ajax_referer('claude_ai_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'claude-ai-integration')));
+        }
+
+        $result = $this->api->analyze_website_design();
+
+        wp_send_json_success($result);
+    }
 }

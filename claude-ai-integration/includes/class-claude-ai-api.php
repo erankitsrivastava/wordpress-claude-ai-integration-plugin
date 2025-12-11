@@ -560,4 +560,364 @@ class Claude_AI_API {
 
         return $this->send_message($prompt, $system_prompt);
     }
+
+    /**
+     * Analyze website design and extract theme information
+     */
+    public function analyze_website_design() {
+        // Get theme information
+        $theme = wp_get_theme();
+        $theme_info = array(
+            'name' => $theme->get('Name'),
+            'version' => $theme->get('Version'),
+            'description' => $theme->get('Description')
+        );
+
+        // Extract color palette from theme
+        $colors = $this->extract_theme_colors();
+
+        // Get common design elements
+        $design_elements = $this->detect_design_patterns();
+
+        return array(
+            'theme' => $theme_info,
+            'colors' => $colors,
+            'design_elements' => $design_elements
+        );
+    }
+
+    /**
+     * Extract color palette from current theme
+     */
+    private function extract_theme_colors() {
+        $colors = array(
+            'primary' => get_theme_mod('primary_color', '#0073aa'),
+            'secondary' => get_theme_mod('secondary_color', '#005177'),
+            'accent' => get_theme_mod('accent_color', '#00a0d2'),
+            'text' => get_theme_mod('text_color', '#32373c'),
+            'background' => get_theme_mod('background_color', '#ffffff'),
+            'link' => get_theme_mod('link_color', '#0073aa')
+        );
+
+        // Try to get colors from custom CSS if theme mods not available
+        if ($colors['primary'] === '#0073aa') {
+            $custom_css = wp_get_custom_css();
+            if (!empty($custom_css)) {
+                // Extract colors from CSS using regex
+                preg_match_all('/#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b/', $custom_css, $matches);
+                if (!empty($matches[0])) {
+                    $extracted_colors = array_unique($matches[0]);
+                    if (count($extracted_colors) > 0) {
+                        $colors['primary'] = $extracted_colors[0];
+                    }
+                    if (count($extracted_colors) > 1) {
+                        $colors['secondary'] = $extracted_colors[1];
+                    }
+                    if (count($extracted_colors) > 2) {
+                        $colors['accent'] = $extracted_colors[2];
+                    }
+                }
+            }
+        }
+
+        return $colors;
+    }
+
+    /**
+     * Detect common design patterns from the website
+     */
+    private function detect_design_patterns() {
+        $patterns = array(
+            'has_sidebar' => is_active_sidebar('sidebar-1'),
+            'menu_locations' => get_nav_menu_locations(),
+            'widget_areas' => wp_get_sidebars_widgets(),
+            'image_sizes' => get_intermediate_image_sizes(),
+            'supports' => array(
+                'custom_header' => current_theme_supports('custom-header'),
+                'custom_background' => current_theme_supports('custom-background'),
+                'post_thumbnails' => current_theme_supports('post-thumbnails'),
+                'custom_logo' => current_theme_supports('custom-logo'),
+                'title_tag' => current_theme_supports('title-tag')
+            )
+        );
+
+        return $patterns;
+    }
+
+    /**
+     * Generate a complete page with form using AI and website design
+     */
+    public function generate_page_with_form($page_config) {
+        $design_info = $this->analyze_website_design();
+
+        $form_type = isset($page_config['form_type']) ? $page_config['form_type'] : 'contact';
+        $page_purpose = isset($page_config['purpose']) ? $page_config['purpose'] : 'Contact Us';
+        $include_elements = isset($page_config['elements']) ? $page_config['elements'] : array();
+
+        // Build design context
+        $design_context = "Website Design Context:\n";
+        $design_context .= "- Theme: {$design_info['theme']['name']}\n";
+        $design_context .= "- Primary Color: {$design_info['colors']['primary']}\n";
+        $design_context .= "- Secondary Color: {$design_info['colors']['secondary']}\n";
+        $design_context .= "- Accent Color: {$design_info['colors']['accent']}\n";
+        $design_context .= "- Text Color: {$design_info['colors']['text']}\n";
+        $design_context .= "- Background Color: {$design_info['colors']['background']}\n";
+
+        $system_prompt = "You are an expert web designer and developer. Create modern, responsive page layouts with forms that match the website's existing design.\n\n";
+        $system_prompt .= "IMPORTANT Design Requirements:\n";
+        $system_prompt .= "- Use the provided color palette consistently\n";
+        $system_prompt .= "- Create mobile-first, responsive designs\n";
+        $system_prompt .= "- Follow modern web design trends (2025 standards)\n";
+        $system_prompt .= "- Use proper HTML5 semantic elements\n";
+        $system_prompt .= "- Include inline CSS for styling that matches the theme\n";
+        $system_prompt .= "- Create accessible forms with proper labels and ARIA attributes\n";
+        $system_prompt .= "- Add form validation attributes (required, pattern, etc.)\n";
+        $system_prompt .= "- Include modern UI elements (gradients, shadows, animations)\n";
+        $system_prompt .= "- Return complete HTML with embedded CSS\n\n";
+        $system_prompt .= $design_context;
+
+        $prompt = $this->build_page_with_form_prompt($form_type, $page_purpose, $include_elements, $design_info['colors']);
+
+        return $this->send_message($prompt, $system_prompt);
+    }
+
+    /**
+     * Build prompt for page with form generation
+     */
+    private function build_page_with_form_prompt($form_type, $purpose, $elements, $colors) {
+        $prompt = "Create a complete, modern landing page for: {$purpose}\n\n";
+
+        $prompt .= "Page Requirements:\n";
+        $prompt .= "1. HERO SECTION:\n";
+        $prompt .= "   - Compelling headline and subheadline\n";
+        $prompt .= "   - Eye-catching design with gradient background using theme colors\n";
+        $prompt .= "   - Clear call-to-action\n\n";
+
+        $prompt .= "2. FORM SECTION:\n";
+        $prompt .= "   - Form Type: " . ucfirst($form_type) . " Form\n";
+        $prompt .= "   - Include appropriate fields for this form type\n";
+        $prompt .= "   - Modern form styling with:\n";
+        $prompt .= "     * Floating labels or placeholder text\n";
+        $prompt .= "     * Focus states with theme colors\n";
+        $prompt .= "     * Input validation (HTML5)\n";
+        $prompt .= "     * Submit button with hover effects\n";
+        $prompt .= "     * Success/error message areas\n\n";
+
+        // Form-specific fields
+        switch ($form_type) {
+            case 'contact':
+                $prompt .= "   Form Fields:\n";
+                $prompt .= "   - Full Name (required)\n";
+                $prompt .= "   - Email Address (required, validated)\n";
+                $prompt .= "   - Phone Number (optional)\n";
+                $prompt .= "   - Subject (dropdown)\n";
+                $prompt .= "   - Message (textarea, required)\n";
+                break;
+            case 'newsletter':
+                $prompt .= "   Form Fields:\n";
+                $prompt .= "   - Email Address (required, validated)\n";
+                $prompt .= "   - First Name (required)\n";
+                $prompt .= "   - Preferences (checkboxes for interests)\n";
+                $prompt .= "   - Privacy policy agreement (required checkbox)\n";
+                break;
+            case 'registration':
+                $prompt .= "   Form Fields:\n";
+                $prompt .= "   - Full Name (required)\n";
+                $prompt .= "   - Email Address (required, validated)\n";
+                $prompt .= "   - Username (required)\n";
+                $prompt .= "   - Password (required, with strength indicator)\n";
+                $prompt .= "   - Confirm Password (required)\n";
+                $prompt .= "   - Terms & Conditions (required checkbox)\n";
+                break;
+            case 'quote':
+                $prompt .= "   Form Fields:\n";
+                $prompt .= "   - Company Name (required)\n";
+                $prompt .= "   - Contact Name (required)\n";
+                $prompt .= "   - Email Address (required, validated)\n";
+                $prompt .= "   - Phone Number (required)\n";
+                $prompt .= "   - Service Interested In (dropdown)\n";
+                $prompt .= "   - Budget Range (select)\n";
+                $prompt .= "   - Project Description (textarea, required)\n";
+                $prompt .= "   - Preferred Contact Method (radio buttons)\n";
+                break;
+            case 'survey':
+                $prompt .= "   Form Fields:\n";
+                $prompt .= "   - Email Address (optional)\n";
+                $prompt .= "   - Multiple choice questions (radio buttons)\n";
+                $prompt .= "   - Rating scales (1-5 stars)\n";
+                $prompt .= "   - Open-ended questions (textareas)\n";
+                $prompt .= "   - Checkboxes for multi-select options\n";
+                break;
+            default:
+                $prompt .= "   - Include appropriate fields for a " . $form_type . " form\n";
+        }
+
+        $prompt .= "\n3. ADDITIONAL SECTIONS:\n";
+        if (in_array('benefits', $elements) || empty($elements)) {
+            $prompt .= "   - Benefits/Features section with icons\n";
+        }
+        if (in_array('testimonials', $elements) || empty($elements)) {
+            $prompt .= "   - Testimonials section (3 testimonials)\n";
+        }
+        if (in_array('faq', $elements)) {
+            $prompt .= "   - FAQ section (5-7 questions)\n";
+        }
+        if (in_array('trust', $elements) || empty($elements)) {
+            $prompt .= "   - Trust indicators (security badges, guarantees)\n";
+        }
+
+        $prompt .= "\n4. DESIGN SPECIFICATIONS:\n";
+        $prompt .= "   - Use these exact colors:\n";
+        $prompt .= "     * Primary: {$colors['primary']}\n";
+        $prompt .= "     * Secondary: {$colors['secondary']}\n";
+        $prompt .= "     * Accent: {$colors['accent']}\n";
+        $prompt .= "     * Text: {$colors['text']}\n";
+        $prompt .= "     * Background: {$colors['background']}\n";
+        $prompt .= "   - Modern CSS features:\n";
+        $prompt .= "     * CSS Grid and Flexbox for layout\n";
+        $prompt .= "     * Smooth transitions and hover effects\n";
+        $prompt .= "     * Box shadows for depth\n";
+        $prompt .= "     * Border radius for modern look\n";
+        $prompt .= "     * Responsive typography (clamp() for fluid sizing)\n";
+        $prompt .= "   - Mobile-responsive breakpoints:\n";
+        $prompt .= "     * Desktop: 1200px+\n";
+        $prompt .= "     * Tablet: 768px - 1199px\n";
+        $prompt .= "     * Mobile: < 768px\n\n";
+
+        $prompt .= "5. MODERN UI TRENDS (2025):\n";
+        $prompt .= "   - Glassmorphism effects where appropriate\n";
+        $prompt .= "   - Subtle animations on scroll (CSS only)\n";
+        $prompt .= "   - Micro-interactions on buttons\n";
+        $prompt .= "   - Card-based layouts with subtle shadows\n";
+        $prompt .= "   - Ample white space for clean look\n";
+        $prompt .= "   - Bold typography for headlines\n\n";
+
+        $prompt .= "6. FORM HANDLING:\n";
+        $prompt .= "   - Add form action attribute (can be empty for now)\n";
+        $prompt .= "   - Include method='post'\n";
+        $prompt .= "   - Add hidden field for form type\n";
+        $prompt .= "   - Include nonce field placeholder\n";
+        $prompt .= "   - Add data attributes for potential AJAX submission\n\n";
+
+        $prompt .= "Return ONLY the complete HTML with embedded CSS (in <style> tags within the HTML). ";
+        $prompt .= "Make it production-ready, modern, and visually stunning while matching the theme colors perfectly.";
+
+        return $prompt;
+    }
+
+    /**
+     * Generate specific form HTML
+     */
+    public function generate_form($form_type, $options = array()) {
+        $design_info = $this->analyze_website_design();
+
+        $system_prompt = "You are an expert form designer. Create modern, accessible forms with beautiful styling.\n\n";
+        $system_prompt .= "Requirements:\n";
+        $system_prompt .= "- HTML5 semantic form elements\n";
+        $system_prompt .= "- Proper labels and ARIA attributes\n";
+        $system_prompt .= "- Inline CSS styling that matches theme colors\n";
+        $system_prompt .= "- Validation attributes (required, pattern, minlength, etc.)\n";
+        $system_prompt .= "- Responsive design\n";
+        $system_prompt .= "- Modern UI with focus states\n";
+        $system_prompt .= "- Submit button with loading state\n\n";
+        $system_prompt .= "Theme Colors:\n";
+        $system_prompt .= "- Primary: {$design_info['colors']['primary']}\n";
+        $system_prompt .= "- Accent: {$design_info['colors']['accent']}\n";
+        $system_prompt .= "- Text: {$design_info['colors']['text']}\n";
+
+        $prompt = "Create a modern {$form_type} form with the following specifications:\n\n";
+
+        // Add form-specific requirements
+        switch ($form_type) {
+            case 'contact':
+                $prompt .= "Fields: Name, Email, Phone (optional), Subject, Message\n";
+                break;
+            case 'newsletter':
+                $prompt .= "Fields: Email, First Name, Consent checkbox\n";
+                $prompt .= "Style: Inline form suitable for sidebars or footers\n";
+                break;
+            case 'feedback':
+                $prompt .= "Fields: Name, Email, Rating (stars), Comment\n";
+                break;
+            case 'application':
+                $prompt .= "Fields: Personal info, Education, Experience, Upload Resume\n";
+                break;
+        }
+
+        $prompt .= "\nStyle it with modern design trends, use theme colors, and make it mobile-responsive.";
+        $prompt .= "\nReturn complete HTML with embedded CSS in <style> tags.";
+
+        return $this->send_message($prompt, $system_prompt);
+    }
+
+    /**
+     * Generate landing page sections
+     */
+    public function generate_page_section($section_type, $options = array()) {
+        $design_info = $this->analyze_website_design();
+
+        $content = isset($options['content']) ? $options['content'] : '';
+        $heading = isset($options['heading']) ? $options['heading'] : '';
+
+        $system_prompt = "You are a professional web designer creating modern page sections.\n\n";
+        $system_prompt .= "Design Requirements:\n";
+        $system_prompt .= "- Modern, clean design\n";
+        $system_prompt .= "- Match theme colors: Primary {$design_info['colors']['primary']}, Secondary {$design_info['colors']['secondary']}\n";
+        $system_prompt .= "- Responsive layout\n";
+        $system_prompt .= "- Use CSS Grid/Flexbox\n";
+        $system_prompt .= "- Include animations and transitions\n";
+        $system_prompt .= "- Return HTML with embedded CSS\n";
+
+        $prompts = array(
+            'hero' => "Create a stunning hero section with gradient background, compelling headline, subheadline, and CTA button. Heading: {$heading}",
+            'features' => "Create a 3-column features section with icons, headings, and descriptions. Use card design with hover effects.",
+            'testimonials' => "Create a testimonials carousel/grid with 3 testimonials, photos (use placeholder), names, and quotes. Modern card design.",
+            'cta' => "Create a call-to-action section with background, heading, description, and prominent button. {$content}",
+            'pricing' => "Create a 3-tier pricing table with feature comparison, highlighted popular plan, and purchase buttons.",
+            'faq' => "Create an FAQ section with accordion-style questions and answers. Modern, clean design.",
+            'stats' => "Create a statistics section with 4 key metrics, large numbers, icons, and descriptions.",
+            'team' => "Create a team members section with photos (placeholders), names, roles, and social links. Grid layout."
+        );
+
+        $prompt = isset($prompts[$section_type]) ? $prompts[$section_type] : "Create a {$section_type} section with modern design.";
+        $prompt .= "\n\nContent: {$content}\n";
+        $prompt .= "Make it visually stunning with theme colors and modern 2025 design trends.";
+
+        return $this->send_message($prompt, $system_prompt);
+    }
+
+    /**
+     * Generate complete multi-page website structure
+     */
+    public function generate_complete_website($website_config) {
+        $design_info = $this->analyze_website_design();
+
+        $business_type = isset($website_config['business_type']) ? $website_config['business_type'] : 'business';
+        $pages_needed = isset($website_config['pages']) ? $website_config['pages'] : array('home', 'about', 'services', 'contact');
+        $business_name = isset($website_config['business_name']) ? $website_config['business_name'] : 'Your Business';
+        $description = isset($website_config['description']) ? $website_config['description'] : '';
+
+        $system_prompt = "You are an expert web architect creating complete website structures.\n\n";
+        $system_prompt .= "Website Theme Design:\n";
+        $system_prompt .= "- Primary Color: {$design_info['colors']['primary']}\n";
+        $system_prompt .= "- Secondary Color: {$design_info['colors']['secondary']}\n";
+        $system_prompt .= "- Use modern, professional design\n";
+        $system_prompt .= "- Mobile-first responsive\n";
+        $system_prompt .= "- Consistent styling across all pages\n\n";
+        $system_prompt .= "Return a JSON structure with page recommendations, structure, and content outline.";
+
+        $prompt = "Create a complete website structure for: {$business_name}\n";
+        $prompt .= "Business Type: {$business_type}\n";
+        $prompt .= "Description: {$description}\n";
+        $prompt .= "Pages Needed: " . implode(', ', $pages_needed) . "\n\n";
+        $prompt .= "For each page, provide:\n";
+        $prompt .= "1. Page name and slug\n";
+        $prompt .= "2. Main sections needed\n";
+        $prompt .= "3. Content outline\n";
+        $prompt .= "4. Recommended elements (forms, CTAs, etc.)\n";
+        $prompt .= "5. SEO keywords\n\n";
+        $prompt .= "Format as JSON with structure: {\"pages\": [{\"name\": \"\", \"slug\": \"\", \"sections\": [], \"content_outline\": \"\", \"elements\": [], \"seo_keywords\": []}]}";
+
+        return $this->send_message($prompt, $system_prompt);
+    }
 }

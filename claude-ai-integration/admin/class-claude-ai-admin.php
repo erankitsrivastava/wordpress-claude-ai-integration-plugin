@@ -79,6 +79,16 @@ class Claude_AI_Admin {
             array($this, 'display_content_generator_page')
         );
 
+        // Page Builder submenu
+        add_submenu_page(
+            'claude-ai-integration',
+            __('Page Builder', 'claude-ai-integration'),
+            __('Page Builder', 'claude-ai-integration'),
+            'edit_pages',
+            'claude-ai-page-builder',
+            array($this, 'display_page_builder_page')
+        );
+
         // Settings submenu
         add_submenu_page(
             'claude-ai-integration',
@@ -344,5 +354,12 @@ class Claude_AI_Admin {
      */
     public function display_content_generator_page() {
         require_once CLAUDE_AI_PLUGIN_DIR . 'admin/partials/content-generator-page.php';
+    }
+
+    /**
+     * Display page builder page
+     */
+    public function display_page_builder_page() {
+        require_once CLAUDE_AI_PLUGIN_DIR . 'admin/partials/page-builder-page.php';
     }
 }
