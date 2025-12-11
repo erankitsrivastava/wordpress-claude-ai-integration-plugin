@@ -1,0 +1,19 @@
+# Build artifacts
+claude-ai-integration.zip
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
