@@ -94,15 +94,28 @@ class Claude_AI_Admin {
      * Register plugin settings
      */
     public function register_settings() {
+        // Claude API Settings
         register_setting('claude_ai_settings', 'claude_ai_api_key');
         register_setting('claude_ai_settings', 'claude_ai_model');
         register_setting('claude_ai_settings', 'claude_ai_max_tokens');
         register_setting('claude_ai_settings', 'claude_ai_temperature');
 
+        // Image API Settings
+        register_setting('claude_ai_settings', 'claude_ai_unsplash_key');
+        register_setting('claude_ai_settings', 'claude_ai_pexels_key');
+        register_setting('claude_ai_settings', 'claude_ai_pixabay_key');
+        register_setting('claude_ai_settings', 'claude_ai_auto_images');
+        register_setting('claude_ai_settings', 'claude_ai_auto_featured_image');
+
+        // Content Options
+        register_setting('claude_ai_settings', 'claude_ai_human_style');
+        register_setting('claude_ai_settings', 'claude_ai_auto_seo');
+
+        // API Configuration Section
         add_settings_section(
             'claude_ai_api_section',
-            __('API Configuration', 'claude-ai-integration'),
-            array($this, 'settings_section_callback'),
+            __('Claude API Configuration', 'claude-ai-integration'),
+            array($this, 'api_section_callback'),
             'claude_ai_settings'
         );
 
@@ -137,6 +150,96 @@ class Claude_AI_Admin {
             'claude_ai_settings',
             'claude_ai_api_section'
         );
+
+        // Image Integration Section
+        add_settings_section(
+            'claude_ai_image_section',
+            __('Image Integration', 'claude-ai-integration'),
+            array($this, 'image_section_callback'),
+            'claude_ai_settings'
+        );
+
+        add_settings_field(
+            'claude_ai_auto_images',
+            __('Auto-Insert Images', 'claude-ai-integration'),
+            array($this, 'auto_images_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_image_section'
+        );
+
+        add_settings_field(
+            'claude_ai_auto_featured_image',
+            __('Auto Featured Image', 'claude-ai-integration'),
+            array($this, 'auto_featured_image_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_image_section'
+        );
+
+        add_settings_field(
+            'claude_ai_unsplash_key',
+            __('Unsplash API Key', 'claude-ai-integration'),
+            array($this, 'unsplash_key_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_image_section'
+        );
+
+        add_settings_field(
+            'claude_ai_pexels_key',
+            __('Pexels API Key', 'claude-ai-integration'),
+            array($this, 'pexels_key_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_image_section'
+        );
+
+        add_settings_field(
+            'claude_ai_pixabay_key',
+            __('Pixabay API Key', 'claude-ai-integration'),
+            array($this, 'pixabay_key_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_image_section'
+        );
+
+        // Content Options Section
+        add_settings_section(
+            'claude_ai_content_section',
+            __('Content Generation Options', 'claude-ai-integration'),
+            array($this, 'content_section_callback'),
+            'claude_ai_settings'
+        );
+
+        add_settings_field(
+            'claude_ai_human_style',
+            __('Human-Like Writing', 'claude-ai-integration'),
+            array($this, 'human_style_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_content_section'
+        );
+
+        add_settings_field(
+            'claude_ai_auto_seo',
+            __('Auto SEO Optimization', 'claude-ai-integration'),
+            array($this, 'auto_seo_field_callback'),
+            'claude_ai_settings',
+            'claude_ai_content_section'
+        );
+    }
+
+    public function api_section_callback() {
+        echo '<p>' . esc_html__('Configure your Anthropic Claude API settings.', 'claude-ai-integration') . '</p>';
+    }
+
+    public function image_section_callback() {
+        echo '<p>' . esc_html__('Configure image integration. At least one image API key is recommended for automatic image insertion.', 'claude-ai-integration') . '</p>';
+        echo '<p><small>';
+        echo esc_html__('Get API keys: ', 'claude-ai-integration');
+        echo '<a href="https://unsplash.com/developers" target="_blank">Unsplash</a> | ';
+        echo '<a href="https://www.pexels.com/api/" target="_blank">Pexels</a> | ';
+        echo '<a href="https://pixabay.com/api/docs/" target="_blank">Pixabay</a>';
+        echo '</small></p>';
+    }
+
+    public function content_section_callback() {
+        echo '<p>' . esc_html__('Advanced content generation options to create more natural, human-like content.', 'claude-ai-integration') . '</p>';
     }
 
     public function settings_section_callback() {
@@ -176,6 +279,57 @@ class Claude_AI_Admin {
         $value = get_option('claude_ai_temperature', '1.0');
         echo '<input type="number" name="claude_ai_temperature" value="' . esc_attr($value) . '" class="small-text" min="0" max="2" step="0.1" />';
         echo '<p class="description">' . esc_html__('Temperature for content generation (0-2). Higher = more creative.', 'claude-ai-integration') . '</p>';
+    }
+
+    // Image API Fields
+    public function auto_images_field_callback() {
+        $value = get_option('claude_ai_auto_images', false);
+        echo '<label><input type="checkbox" name="claude_ai_auto_images" value="1"' . checked($value, 1, false) . ' /> ';
+        echo esc_html__('Automatically insert relevant images into generated content', 'claude-ai-integration') . '</label>';
+        echo '<p class="description">' . esc_html__('Requires at least one image API key configured below.', 'claude-ai-integration') . '</p>';
+    }
+
+    public function auto_featured_image_field_callback() {
+        $value = get_option('claude_ai_auto_featured_image', false);
+        echo '<label><input type="checkbox" name="claude_ai_auto_featured_image" value="1"' . checked($value, 1, false) . ' /> ';
+        echo esc_html__('Automatically set featured image for generated posts', 'claude-ai-integration') . '</label>';
+        echo '<p class="description">' . esc_html__('Downloads and sets a relevant featured image based on the topic.', 'claude-ai-integration') . '</p>';
+    }
+
+    public function unsplash_key_field_callback() {
+        $value = get_option('claude_ai_unsplash_key', '');
+        echo '<input type="password" name="claude_ai_unsplash_key" value="' . esc_attr($value) . '" class="regular-text" />';
+        echo '<p class="description">' . esc_html__('Free API key from Unsplash. 50 requests/hour. ', 'claude-ai-integration');
+        echo '<a href="https://unsplash.com/developers" target="_blank">' . esc_html__('Get API Key', 'claude-ai-integration') . '</a></p>';
+    }
+
+    public function pexels_key_field_callback() {
+        $value = get_option('claude_ai_pexels_key', '');
+        echo '<input type="password" name="claude_ai_pexels_key" value="' . esc_attr($value) . '" class="regular-text" />';
+        echo '<p class="description">' . esc_html__('Free API key from Pexels. 200 requests/hour. ', 'claude-ai-integration');
+        echo '<a href="https://www.pexels.com/api/" target="_blank">' . esc_html__('Get API Key', 'claude-ai-integration') . '</a></p>';
+    }
+
+    public function pixabay_key_field_callback() {
+        $value = get_option('claude_ai_pixabay_key', '');
+        echo '<input type="password" name="claude_ai_pixabay_key" value="' . esc_attr($value) . '" class="regular-text" />';
+        echo '<p class="description">' . esc_html__('Free API key from Pixabay. 100 requests/minute. ', 'claude-ai-integration');
+        echo '<a href="https://pixabay.com/api/docs/" target="_blank">' . esc_html__('Get API Key', 'claude-ai-integration') . '</a></p>';
+    }
+
+    // Content Option Fields
+    public function human_style_field_callback() {
+        $value = get_option('claude_ai_human_style', true);
+        echo '<label><input type="checkbox" name="claude_ai_human_style" value="1"' . checked($value, 1, false) . ' /> ';
+        echo esc_html__('Enable human-like writing style', 'claude-ai-integration') . '</label>';
+        echo '<p class="description">' . esc_html__('Generates content that sounds more natural and conversational, with varied sentence structure and personal touches. This helps avoid AI detection.', 'claude-ai-integration') . '</p>';
+    }
+
+    public function auto_seo_field_callback() {
+        $value = get_option('claude_ai_auto_seo', false);
+        echo '<label><input type="checkbox" name="claude_ai_auto_seo" value="1"' . checked($value, 1, false) . ' /> ';
+        echo esc_html__('Automatically generate SEO meta descriptions', 'claude-ai-integration') . '</label>';
+        echo '<p class="description">' . esc_html__('Generates optimized meta descriptions for better search engine visibility.', 'claude-ai-integration') . '</p>';
     }
 
     /**
