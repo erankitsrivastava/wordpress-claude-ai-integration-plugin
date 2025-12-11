@@ -343,6 +343,212 @@ Topic Series: "Home Office Setup Guide"
    - Review and publish
 ```
 
+### Method 4: Page Builder with Intelligent Design Matching
+
+The Page Builder creates complete, professionally designed pages with forms that automatically match your website's theme colors and design patterns. This is perfect for creating landing pages, contact pages, and other conversion-focused pages.
+
+#### Accessing the Page Builder:
+
+1. Go to **Claude AI → Page Builder** in WordPress Admin
+2. View your current theme analysis (colors, design patterns detected)
+3. Choose from three powerful generation options
+
+#### Option 1: Complete Page with Form
+
+Creates a full landing page with integrated form, hero section, benefits, testimonials, and more.
+
+**How to use:**
+1. Enter the **page purpose** (e.g., "Contact Us", "Newsletter Signup", "Get a Quote")
+2. Select **form type**:
+   - **Contact**: Name, email, phone, message fields
+   - **Newsletter**: Email subscription with consent checkbox
+   - **Registration**: User registration with password fields
+   - **Quote Request**: Detailed quote request with service selection
+   - **Survey**: Custom survey with multiple question types
+   - **Feedback**: Customer feedback collection
+
+3. Choose **sections to include**:
+   - ✅ Benefits section (why visitors should fill the form)
+   - ✅ Testimonials (social proof)
+   - ✅ FAQ section (address common questions)
+   - ✅ Trust indicators (security badges, certifications)
+
+4. Click **Generate Page**
+5. Preview the complete page in a new tab
+6. Copy HTML to clipboard or click **Create Page** to publish directly
+
+**What you get:**
+- Responsive, modern design with 2025 design trends
+- Automatic color matching to your theme
+- HTML5 form validation
+- ARIA accessibility attributes
+- Mobile-optimized layout
+- Glassmorphism effects and micro-interactions
+- Complete page structure ready to publish
+
+**Example uses:**
+```
+Purpose: "Book a Free Consultation"
+Form Type: Contact
+Includes: Benefits, Testimonials, Trust Indicators
+Result: Professional landing page with booking form matching your brand colors
+```
+
+#### Option 2: Standalone Form Generator
+
+Creates just the form HTML without the full page structure. Perfect for embedding forms in existing pages.
+
+**How to use:**
+1. Select **form type** from dropdown
+2. Click **Generate Form**
+3. Preview the form HTML
+4. Copy to clipboard
+5. Paste into any page using HTML block or custom HTML field
+
+**Form types available:**
+- Contact Form: Standard contact with name, email, phone, message
+- Newsletter: Simple email subscription
+- Registration: User signup with password confirmation
+- Quote Request: Detailed business quote form
+- Survey: Multi-question survey form
+- Feedback: Customer feedback collection
+
+**Features:**
+- Styled to match your theme colors
+- Responsive design (mobile, tablet, desktop)
+- HTML5 validation (required fields, email format, etc.)
+- Accessibility compliant (ARIA labels, proper structure)
+- Submit button with hover effects
+- Modern, clean design
+
+#### Option 3: Page Section Generator
+
+Creates individual page sections that can be combined to build custom pages.
+
+**Available section types:**
+
+1. **Hero Section**
+   - Large headline with CTA button
+   - Background styling matching theme
+   - Mobile-responsive layout
+
+2. **Features Section**
+   - 3-column feature grid
+   - Icons and descriptions
+   - Perfect for highlighting benefits
+
+3. **Testimonials Section**
+   - 3 customer testimonials
+   - Star ratings and customer info
+   - Social proof for conversions
+
+4. **Call-to-Action Section**
+   - Prominent CTA with button
+   - Urgency messaging
+   - Conversion-optimized design
+
+5. **Pricing Section**
+   - 3-tier pricing table
+   - Feature comparison
+   - Recommended plan highlighting
+
+6. **FAQ Section**
+   - Expandable question/answer pairs
+   - Clean, organized layout
+   - Addresses common concerns
+
+7. **Stats Section**
+   - 4 key statistics/metrics
+   - Visual impact with large numbers
+   - Builds credibility
+
+8. **Team Section**
+   - Team member cards with photos
+   - Roles and social links
+   - Professional presentation
+
+**How to use:**
+1. Select **section type** from dropdown
+2. Optionally enter **heading** and **content** for customization
+3. Click **Generate Section**
+4. Preview the HTML
+5. Copy and paste into your page builder or HTML editor
+
+**Example workflow:**
+```
+Building a service landing page:
+1. Generate Hero section with service headline
+2. Generate Features section highlighting 3 key benefits
+3. Generate Testimonials for social proof
+4. Generate CTA section for conversion
+Result: Complete landing page in minutes, perfectly styled
+```
+
+#### Intelligent Design Matching
+
+The Page Builder automatically analyzes your WordPress theme and extracts:
+
+**Theme Information:**
+- Theme name and version
+- Active design patterns
+- Supported features
+
+**Color Palette:**
+- Primary color (from theme settings)
+- Secondary color
+- Accent colors
+- Text colors
+- Background colors
+- Link colors
+
+**Design Patterns:**
+- Menu locations and layout
+- Sidebar configurations
+- Header/footer structure
+- Supported post formats
+- Theme feature support
+
+**How it works:**
+1. Plugin analyzes your theme's `theme_mod` settings
+2. Extracts color values from custom CSS if needed
+3. Detects active sidebars, menus, and theme features
+4. Passes all design information to Claude AI
+5. AI generates HTML/CSS that perfectly matches your theme
+6. Result: Pages that look like they were custom-designed for your site
+
+**Benefits:**
+- No manual color picking required
+- Consistent brand appearance across all pages
+- Professional design without design skills
+- Saves hours of manual styling work
+- Modern 2025 design trends automatically applied
+
+#### Best Practices for Page Builder
+
+**For Best Results:**
+
+1. **Review Theme Analysis**: Check the theme analysis section to ensure colors were detected correctly
+2. **Customize After Generation**: Generated pages are starting points - add your specific content
+3. **Test Responsiveness**: Preview on mobile, tablet, and desktop
+4. **Form Functionality**: Forms generate HTML - connect to your form handling plugin or service
+5. **Combine Sections**: Mix and match sections to create unique page layouts
+6. **Add Images**: Replace placeholder images with your actual images
+7. **Edit Copy**: Customize headlines and text to match your brand voice
+
+**Form Integration:**
+Generated forms create the HTML structure. To make them functional:
+- Use a form handling plugin (Contact Form 7, WPForms, Gravity Forms)
+- Connect to email service (Mailchimp, ConvertKit, etc.)
+- Add custom PHP form handling
+- Use third-party form services (Formspree, Basin, etc.)
+
+**Design Tips:**
+- Keep theme analysis information visible while generating
+- Use consistent form types across your site
+- Combine Page Builder sections with your own custom content
+- Test all forms before publishing pages
+- Update theme colors in WordPress if needed to regenerate pages
+
 ## 💡 Best Practices
 
 ### Content Generation Tips
@@ -446,7 +652,8 @@ claude-ai-integration/
 │   ├── class-claude-ai-content-generator.php
 │   └── partials/
 │       ├── settings-page.php
-│       └── content-generator-page.php
+│       ├── content-generator-page.php
+│       └── page-builder-page.php
 ├── assets/
 │   ├── css/
 │   │   └── claude-ai-admin.css
@@ -463,6 +670,15 @@ claude-ai-integration/
 - **Content Modification**: Edit and improve existing content with natural language instructions
 - **Content Humanization**: Rewrite AI-generated content to sound more natural and authentic
 - **Multiple Models**: Support for all Claude models (Sonnet 4.5, Opus, Haiku, etc.)
+
+### Page Builder with Intelligent Design Matching 🎨
+- **Complete Pages with Forms**: Generate full landing pages with integrated contact, newsletter, registration, and other forms
+- **Automatic Theme Matching**: Extracts your website's colors, design patterns, and styling automatically
+- **8 Page Sections**: Hero, features, testimonials, CTA, pricing, FAQ, stats, and team sections
+- **Modern 2025 Design**: Glassmorphism, responsive layouts, micro-interactions, and CSS Grid/Flexbox
+- **Form Generator**: Create standalone forms (contact, newsletter, registration, quote, survey, feedback)
+- **Design Analysis**: Real-time theme color extraction and pattern detection
+- **One-Click Publishing**: Preview, copy, or publish directly to WordPress
 
 ### Automatic Image Integration 🖼️
 - **Auto-Insert Images**: Automatically add relevant images throughout generated content
@@ -567,6 +783,46 @@ Output: Professional description highlighting features, benefits, and use cases
    - "Optimize for keyword: [target keyword]"
 3. Generate new SEO-friendly title
 4. Update excerpt for better CTR
+
+### 6. Landing Page Creation with Page Builder
+
+**Scenario:** Creating a professional contact page that matches your brand.
+
+**Workflow:**
+```
+Step 1: Analyze theme (Page Builder does this automatically)
+- Extracts your brand colors
+- Detects design patterns
+- Identifies theme features
+
+Step 2: Generate complete page
+- Purpose: "Contact Us - Get in Touch with Our Team"
+- Form Type: Contact
+- Include: Benefits, FAQ, Trust Indicators
+- Click Generate Page
+
+Step 3: Review and customize
+- Preview the generated page
+- Verify form fields are appropriate
+- Adjust copy to match your brand voice
+- Replace placeholder text with specific information
+
+Step 4: Publish
+- Copy HTML or click Create Page
+- Connect form to email service
+- Test form submission
+- Publish live
+
+Result: Professional contact page matching your exact brand colors in minutes
+```
+
+**Additional Page Builder Use Cases:**
+- **Newsletter Signup Pages**: Generate newsletter landing pages with email collection forms
+- **Service Quote Pages**: Create quote request pages for service businesses
+- **Event Registration**: Build event signup pages with registration forms
+- **Product Launch Pages**: Combine Hero + Features + CTA + Testimonials sections
+- **About Pages**: Use Team + Stats + CTA sections for company about pages
+- **Feedback Collection**: Generate customer feedback pages with survey forms
 
 ## 🔧 Advanced Configuration
 
@@ -833,6 +1089,10 @@ This creates `claude-ai-integration.zip` ready for WordPress installation.
 | Modify existing content | Post Editor → Claude AI Assistant | Enter instruction, click Modify Content |
 | Generate title | Post Editor → Claude AI Assistant | Click Generate Title |
 | Generate excerpt | Post Editor → Claude AI Assistant | Click Generate Excerpt |
+| Create landing page with form | Claude AI → Page Builder | Enter purpose, select form type, click Generate Page |
+| Generate standalone form | Claude AI → Page Builder | Select form type, click Generate Form |
+| Create page section | Claude AI → Page Builder | Select section type, click Generate Section |
+| View theme colors | Claude AI → Page Builder | Check Theme Analysis section at top |
 
 ### Keyboard Shortcuts & Tips
 
