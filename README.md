@@ -1178,4 +1178,14 @@ GPL v2 or later
 
 ## 👨‍💻 Author
 
-HaxCode - [GitHub](https://github.com/erankitsrivastava)
+Ankit Srivastava - [GitHub](https://github.com/erankitsrivastava)
+
+## 👨‍💻 Screenshots
+<img width="3328" height="1698" alt="image" src="https://github.com/user-attachments/assets/72ff7438-53ae-4f41-83e4-778ca7a5a9a8" />
+
+<img width="3242" height="1890" alt="image" src="https://github.com/user-attachments/assets/6814d877-4290-47ce-8417-b176217d1e76" />
+
+<img width="3406" height="3080" alt="Settings-‹-Hax-Code-—-WordPress-12-12-2025_11_50_AM" src="https://github.com/user-attachments/assets/64e952b8-6914-47c7-aa65-ea323ec5aa89" />
+
+
+
